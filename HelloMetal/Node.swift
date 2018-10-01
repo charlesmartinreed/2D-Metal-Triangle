@@ -46,7 +46,8 @@ class Node {
     }
     
     //MARK:- Rendring code
-    func render(commandQueue: MTLCommandQueue, pipelineState: MTLRenderPipelineState, drawable: CAMetalDrawable, projectionMatrix: Matrix4, clearColor: MTLClearColor?) {
+    // parentModelViewMatrix will represent the camera position, used to transform the scene
+    func render(commandQueue: MTLCommandQueue, pipelineState: MTLRenderPipelineState, drawable: CAMetalDrawable, parentModelViewMatrix: Matrix4, projectionMatrix: Matrix4, clearColor: MTLClearColor?) {
         
         let renderPassDescriptor = MTLRenderPassDescriptor()
         renderPassDescriptor.colorAttachments[0].texture = drawable.texture
@@ -62,6 +63,7 @@ class Node {
         
         // passing vertex data to the shaders as UNIFORM DATA
         let nodeModelMatrix = self.modelMatrix()
+        nodeModelMatrix.multiplyLeft(parentModelViewMatrix) //making a model view matrix by multiplying the model matrix with the view matrix
         
         let uniformBuffer = device.makeBuffer(length: MemoryLayout<Float>.size * Matrix4.numberOfElements() * 2, options: [])! // create buffer using shared CPU/GPU memory
         

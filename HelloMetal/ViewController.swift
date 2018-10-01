@@ -46,12 +46,12 @@ class ViewController: UIViewController {
         
         // drawing our node using its helper classes
         objectToDraw = Cube(device: device)
-        objectToDraw.positionX = 0.0
-        objectToDraw.positionY = 0.0
-        objectToDraw.positionZ = -2.0
-        
-        objectToDraw.rotationZ = Matrix4.degrees(toRad: 45)
-        objectToDraw.scale = 0.5
+//        objectToDraw.positionX = 0.0
+//        objectToDraw.positionY = 0.0
+//        objectToDraw.positionZ = -2.0
+//        
+//        objectToDraw.rotationZ = Matrix4.degrees(toRad: 45)
+//        objectToDraw.scale = 0.5
         
         // creating our rendering pipeline
         // grab the default Library's built in functions from the GPU device.
@@ -81,8 +81,12 @@ class ViewController: UIViewController {
         // creating our Redner Pass Descriptor
         guard let drawable = metalLayer.nextDrawable() else { return } // call nextDrawable to get the next texture to draw on screen
         
+        let worldModelMatrix = Matrix4()
+        worldModelMatrix.translate(0.0, y: 0.0, z: -7.0)
+        worldModelMatrix.rotateAroundX(Matrix4.degrees(toRad: 25), y: 0.0, z: 0.0) //rotate the scene around the X axis, by 25 deg. Because we're using the camera view, this is same as rotating the camera.
+        
         // using the render method from our Node class, by way of the Triangle class which extends it.
-        objectToDraw.render(commandQueue: commandQueue, pipelineState: pipelineState, drawable: drawable, projectionMatrix: projectionMatrix, clearColor: nil)
+        objectToDraw.render(commandQueue: commandQueue, pipelineState: pipelineState, drawable: drawable, parentModelViewMatrix: worldModelMatrix, projectionMatrix: projectionMatrix, clearColor: nil)
     }
     
     @objc func gameloop() {

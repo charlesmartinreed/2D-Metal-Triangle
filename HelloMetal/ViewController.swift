@@ -21,11 +21,16 @@ var commandQueue: MTLCommandQueue!
 
 //MARK:- Rendering Properties
 var timer: CADisplayLink!
+var projectionMatrix: Matrix4!
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //MARK:- Perspective Projection
+        //85.0 specifies the camera's vertical angle of view
+        projectionMatrix = Matrix4.makePerspectiveViewAngle(Matrix4.degrees(toRad: 85.0), aspectRatio: Float(self.view.bounds.size.width / self.view.bounds.size.height), nearZ: 0.01, farZ: 100.0)
         
         //MARK:- Setup code
         // initializing the MTLDevice using the default detected Metal compatible GPU
@@ -40,8 +45,11 @@ class ViewController: UIViewController {
         view.layer.addSublayer(metalLayer)
         
         // drawing our node using its helper classes
-       objectToDraw = Cube(device: device)
-        objectToDraw.positionX = -0.25
+        objectToDraw = Cube(device: device)
+        objectToDraw.positionX = 0.0
+        objectToDraw.positionY = 0.0
+        objectToDraw.positionZ = -2.0
+        
         objectToDraw.rotationZ = Matrix4.degrees(toRad: 45)
         objectToDraw.scale = 0.5
         
@@ -74,7 +82,7 @@ class ViewController: UIViewController {
         guard let drawable = metalLayer.nextDrawable() else { return } // call nextDrawable to get the next texture to draw on screen
         
         // using the render method from our Node class, by way of the Triangle class which extends it.
-        objectToDraw.render(commandQueue: commandQueue, pipelineState: pipelineState, drawable: drawable, clearColor: nil)
+        objectToDraw.render(commandQueue: commandQueue, pipelineState: pipelineState, drawable: drawable, projectionMatrix: projectionMatrix, clearColor: nil)
     }
     
     @objc func gameloop() {

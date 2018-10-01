@@ -46,7 +46,7 @@ class Node {
     }
     
     //MARK:- Rendring code
-    func render(commandQueue: MTLCommandQueue, pipelineState: MTLRenderPipelineState, drawable: CAMetalDrawable, clearColor: MTLClearColor?) {
+    func render(commandQueue: MTLCommandQueue, pipelineState: MTLRenderPipelineState, drawable: CAMetalDrawable, projectionMatrix: Matrix4, clearColor: MTLClearColor?) {
         
         let renderPassDescriptor = MTLRenderPassDescriptor()
         renderPassDescriptor.colorAttachments[0].texture = drawable.texture
@@ -63,9 +63,11 @@ class Node {
         // passing vertex data to the shaders as UNIFORM DATA
         let nodeModelMatrix = self.modelMatrix()
         
-        let uniformBuffer = device.makeBuffer(length: MemoryLayout<Float>.size * Matrix4.numberOfElements(), options: []) // create buffer using shared CPU/GPU memory
-        let bufferPointer = uniformBuffer?.contents() // contents() returns a memory address, i.e, raw pointer
+        let uniformBuffer = device.makeBuffer(length: MemoryLayout<Float>.size * Matrix4.numberOfElements() * 2, options: [])! // create buffer using shared CPU/GPU memory
+        
+        let bufferPointer = uniformBuffer.contents() // contents() returns a memory address, i.e, raw pointer
         memcpy(bufferPointer, nodeModelMatrix.raw(), MemoryLayout<Float>.size * Matrix4.numberOfElements()) // copy matrix data into the buffer
+        memcpy(bufferPointer + MemoryLayout<Float>.size * Matrix4.numberOfElements(), projectionMatrix.raw(), MemoryLayout<Float>.size * Matrix4.numberOfElements())
         renderEncoder?.setVertexBuffer(uniformBuffer, offset: 0, index: 1) // send the uniformBuffer off to the vertex shader
         
         renderEncoder?.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertexCount, instanceCount: vertexCount/3)

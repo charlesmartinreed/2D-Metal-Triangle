@@ -23,6 +23,7 @@ struct VertexOut{
 
 struct Uniforms{
     float4x4 modelMatrix;
+    float4x4 projectionMatrix;
 };
 
 // vertex shaders must begin with they keyword 'vertex'
@@ -36,11 +37,12 @@ vertex VertexOut basic_vertex(
     unsigned int vid [[ vertex_id ]]) {
     
     float4x4 mv_Matrix = uniforms.modelMatrix;
+    float4x4 proj_Matrix = uniforms.projectionMatrix;
     
     VertexIn VertexIn = vertex_array[vid]; // get the current vertex from array
     
     VertexOut VertexOut; // create VertexOut and pass data from VertexIn to VertexOut
-    VertexOut.position = mv_Matrix * float4(VertexIn.position, 1); // this will apply the model transformation to a vertex
+    VertexOut.position = proj_Matrix * mv_Matrix * float4(VertexIn.position, 1); // this will apply the model transformation to a vertex
     VertexOut.color = VertexIn.color;
     
     return VertexOut;

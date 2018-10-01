@@ -12,6 +12,16 @@ import QuartzCore
 
 class Node {
     
+    //MARK:- Transformation properties
+    var positionX: Float = 0.0
+    var positionY: Float = 0.0
+    var positionZ: Float = 0.0
+    
+    var rotationX: Float = 0.0
+    var rotationY: Float = 0.0
+    var rotationZ: Float = 0.0
+    var scale: Float = 1.0
+    
     let device: MTLDevice
     let name: String
     var vertexCount: Int
@@ -49,11 +59,29 @@ class Node {
         let renderEncoder = commandBuffer?.makeRenderCommandEncoder(descriptor: renderPassDescriptor)
         renderEncoder?.setRenderPipelineState(pipelineState)
         renderEncoder?.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+        
+        // passing vertex data to the shaders as UNIFORM DATA
+        let nodeModelMatrix = self.modelMatrix()
+        
+        let uniformBuffer = device.makeBuffer(length: MemoryLayout<Float>.size * Matrix4.numberOfElements(), options: []) // create buffer using shared CPU/GPU memory
+        let bufferPointer = uniformBuffer?.contents() // contents() returns a memory address, i.e, raw pointer
+        memcpy(bufferPointer, nodeModelMatrix.raw(), MemoryLayout<Float>.size * Matrix4.numberOfElements()) // copy matrix data into the buffer
+        renderEncoder?.setVertexBuffer(uniformBuffer, offset: 0, index: 1) // send the uniformBuffer off to the vertex shader
+        
         renderEncoder?.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertexCount, instanceCount: vertexCount/3)
         renderEncoder?.endEncoding()
         
         commandBuffer?.present(drawable)
         commandBuffer?.commit()
         
+    }
+    
+    //MARK: Model matrix creation method
+    func modelMatrix() -> Matrix4 {
+        let matrix = Matrix4()
+        matrix.translate(positionX, y: positionY, z: positionZ)
+        matrix.rotateAroundX(rotationX, y: rotationY, z: rotationZ)
+        matrix.scale(scale, y: scale, z: scale)
+        return matrix
     }
 }

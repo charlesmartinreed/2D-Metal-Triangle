@@ -15,7 +15,7 @@ var metalLayer: CAMetalLayer!
 // assuming z=0, using the default normalized coordinate system of a 2x2x1 cube centered at coordinates (0,0,0.5)
 //node object holds vertexBuffer
 
-var objectToDraw: Triangle!
+var objectToDraw: Cube!
 var pipelineState: MTLRenderPipelineState!
 var commandQueue: MTLCommandQueue!
 
@@ -39,8 +39,11 @@ class ViewController: UIViewController {
         metalLayer.frame = view.layer.frame
         view.layer.addSublayer(metalLayer)
         
-        // drawing our triangle using our Triangle helper classes
-       objectToDraw = Triangle(device: device)
+        // drawing our node using its helper classes
+       objectToDraw = Cube(device: device)
+        objectToDraw.positionX = -0.25
+        objectToDraw.rotationZ = Matrix4.degrees(toRad: 45)
+        objectToDraw.scale = 0.5
         
         // creating our rendering pipeline
         // grab the default Library's built in functions from the GPU device.

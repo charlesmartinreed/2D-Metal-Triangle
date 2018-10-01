@@ -17,6 +17,7 @@
 		8CA4A0002162A84A00DD2DFA /* Vertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CA49FFF2162A84A00DD2DFA /* Vertex.swift */; };
 		8CA4A0022162A8B300DD2DFA /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CA4A0012162A8B300DD2DFA /* Node.swift */; };
 		8CA4A0042162ACFF00DD2DFA /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CA4A0032162ACFF00DD2DFA /* Triangle.swift */; };
+		8CA4A0062162B42E00DD2DFA /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CA4A0052162B42E00DD2DFA /* Cube.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		8CA49FFF2162A84A00DD2DFA /* Vertex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vertex.swift; sourceTree = "<group>"; };
 		8CA4A0012162A8B300DD2DFA /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		8CA4A0032162ACFF00DD2DFA /* Triangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
+		8CA4A0052162B42E00DD2DFA /* Cube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cube.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,7 @@
 				8CA49FE921628FBF00DD2DFA /* ViewController.swift */,
 				8CA49FFF2162A84A00DD2DFA /* Vertex.swift */,
 				8CA4A0012162A8B300DD2DFA /* Node.swift */,
+				8CA4A0052162B42E00DD2DFA /* Cube.swift */,
 				8CA4A0032162ACFF00DD2DFA /* Triangle.swift */,
 				8CA49FEB21628FBF00DD2DFA /* Main.storyboard */,
 				8CA49FEE21628FC200DD2DFA /* Assets.xcassets */,
@@ -159,6 +162,7 @@
 				8CA49FFE2162A46400DD2DFA /* Matrix4.m in Sources */,
 				8CA49FEA21628FBF00DD2DFA /* ViewController.swift in Sources */,
 				8CA4A0022162A8B300DD2DFA /* Node.swift in Sources */,
+				8CA4A0062162B42E00DD2DFA /* Cube.swift in Sources */,
 				8CA4A0002162A84A00DD2DFA /* Vertex.swift in Sources */,
 				8CA4A0042162ACFF00DD2DFA /* Triangle.swift in Sources */,
 				8CA49FE821628FBF00DD2DFA /* AppDelegate.swift in Sources */,

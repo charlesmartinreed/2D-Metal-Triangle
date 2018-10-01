@@ -9,7 +9,7 @@
 import UIKit
 import Metal
 
-//MARK:- Properties
+//MARK:- Pipeline Properties
 var device: MTLDevice!
 var metalLayer: CAMetalLayer!
 // assuming z=0, using the default normalized coordinate system of a 2x2x1 cube centered at coordinates (0,0,0.5)
@@ -19,6 +19,9 @@ let vertexData: [Float] = [0.0, 1.0, 0.0,
 var vertexBuffer: MTLBuffer!
 var pipelineState: MTLRenderPipelineState!
 var commandQueue: MTLCommandQueue!
+
+//MARK:- Rendering Properties
+var timer: CADisplayLink!
 
 class ViewController: UIViewController {
 
@@ -60,8 +63,40 @@ class ViewController: UIViewController {
         commandQueue = device.makeCommandQueue()
         
         //MARK:- Rendering code
+        // setting up the display link
+        timer = CADisplayLink(target: self, selector: #selector(gameloop))
+        timer.add(to: .main, forMode: .default)
     }
 
+    func render(){
+        // creating our Redner Pass Descriptor
+        guard let drawable = metalLayer.nextDrawable() else { return } // call nextDrawable to get the next texture to draw on screen
+        // configure the render pass descriptor to use the texture. Set texture to clear color before drawing, define the clear color as a green hue.
+        let renderPassDescriptor = MTLRenderPassDescriptor()
+        renderPassDescriptor.colorAttachments[0].texture = drawable.texture
+        renderPassDescriptor.colorAttachments[0].loadAction = .clear
+        renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0.0, green: 104.0/255.0, blue: 5.0/255.0, alpha: 1.0)
+        
+        // create command buffer and render commands using renderPassDescriptor
+        let commandBuffer = commandQueue.makeCommandBuffer()
+        let renderEncoder = commandBuffer?.makeRenderCommandEncoder(descriptor: renderPassDescriptor)
+        renderEncoder?.setRenderPipelineState(pipelineState)
+        renderEncoder?.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+        renderEncoder?.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 3, instanceCount: 1)
+
+        renderEncoder?.endEncoding()
+        
+        // command buffer commit
+        commandBuffer?.present(drawable)
+        commandBuffer?.commit() // make GPU execute the drawable contents on the buffer immediately
+    }
+    
+    @objc func gameloop() {
+        autoreleasepool {
+            // call render each frame
+            self.render()
+        }
+    }
 
 }
 

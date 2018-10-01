@@ -60,6 +60,9 @@ class Node {
         let commandBuffer = commandQueue.makeCommandBuffer()
         
         let renderEncoder = commandBuffer?.makeRenderCommandEncoder(descriptor: renderPassDescriptor)
+        //MARK:- Backface culling transparency fix
+        renderEncoder?.setCullMode(.front)
+        
         renderEncoder?.setRenderPipelineState(pipelineState)
         renderEncoder?.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
         

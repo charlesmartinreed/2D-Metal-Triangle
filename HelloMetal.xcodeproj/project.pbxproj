@@ -68,12 +68,12 @@
 			children = (
 				8CA49FFC2162A46300DD2DFA /* Matrix4.h */,
 				8CA49FFD2162A46400DD2DFA /* Matrix4.m */,
+				8CA49FF92162969C00DD2DFA /* Shaders.metal */,
 				8CA49FE721628FBF00DD2DFA /* AppDelegate.swift */,
 				8CA49FE921628FBF00DD2DFA /* ViewController.swift */,
 				8CA49FFF2162A84A00DD2DFA /* Vertex.swift */,
 				8CA4A0012162A8B300DD2DFA /* Node.swift */,
 				8CA4A0032162ACFF00DD2DFA /* Triangle.swift */,
-				8CA49FF92162969C00DD2DFA /* Shaders.metal */,
 				8CA49FEB21628FBF00DD2DFA /* Main.storyboard */,
 				8CA49FEE21628FC200DD2DFA /* Assets.xcassets */,
 				8CA49FF021628FC200DD2DFA /* LaunchScreen.storyboard */,

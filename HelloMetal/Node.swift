@@ -13,6 +13,8 @@ import QuartzCore
 class Node {
     
     //MARK:- Transformation properties
+    var time: CFTimeInterval  = 0.0 //track how long the node has been around
+    
     var positionX: Float = 0.0
     var positionY: Float = 0.0
     var positionZ: Float = 0.0
@@ -87,5 +89,9 @@ class Node {
         matrix.rotateAroundX(rotationX, y: rotationY, z: rotationZ)
         matrix.scale(scale, y: scale, z: scale)
         return matrix
+    }
+    
+    func updateWithDelta(delta: CFTimeInterval) {
+        time += delta
     }
 }

@@ -22,6 +22,7 @@ var commandQueue: MTLCommandQueue!
 //MARK:- Rendering Properties
 var timer: CADisplayLink!
 var projectionMatrix: Matrix4!
+var lastFrameTimestamp: CFTimeInterval = 0.0
 
 class ViewController: UIViewController {
 
@@ -73,7 +74,7 @@ class ViewController: UIViewController {
         
         //MARK:- Rendering code
         // setting up the display link
-        timer = CADisplayLink(target: self, selector: #selector(gameloop))
+        timer = CADisplayLink(target: self, selector: #selector(newFrame(displayLink:)))
         timer.add(to: .main, forMode: .default)
     }
 
@@ -89,9 +90,25 @@ class ViewController: UIViewController {
         objectToDraw.render(commandQueue: commandQueue, pipelineState: pipelineState, drawable: drawable, parentModelViewMatrix: worldModelMatrix, projectionMatrix: projectionMatrix, clearColor: nil)
     }
     
-    @objc func gameloop() {
+    @objc func newFrame(displayLink: CADisplayLink) {
+        
+        // calculate time between this frame and the prevous one
+        if lastFrameTimestamp == 0.0 {
+            lastFrameTimestamp = displayLink.timestamp
+        }
+        
+        let elapsed: CFTimeInterval = displayLink.timestamp - lastFrameTimestamp
+        lastFrameTimestamp = displayLink.timestamp
+        
+        gameLoop(timeSinceLastUpdate: elapsed)
+    }
+    
+    func gameLoop(timeSinceLastUpdate: CFTimeInterval) {
+        // update the node before rendering - we'll overwrite this in the Cube class
+        objectToDraw.updateWithDelta(delta: timeSinceLastUpdate)
+        
+        // when node is updated, call the render method
         autoreleasepool {
-            // call render each frame
             self.render()
         }
     }

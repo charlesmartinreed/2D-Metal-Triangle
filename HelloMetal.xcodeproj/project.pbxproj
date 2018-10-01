@@ -13,6 +13,10 @@
 		8CA49FEF21628FC200DD2DFA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8CA49FEE21628FC200DD2DFA /* Assets.xcassets */; };
 		8CA49FF221628FC200DD2DFA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8CA49FF021628FC200DD2DFA /* LaunchScreen.storyboard */; };
 		8CA49FFA2162969C00DD2DFA /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8CA49FF92162969C00DD2DFA /* Shaders.metal */; };
+		8CA49FFE2162A46400DD2DFA /* Matrix4.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA49FFD2162A46400DD2DFA /* Matrix4.m */; };
+		8CA4A0002162A84A00DD2DFA /* Vertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CA49FFF2162A84A00DD2DFA /* Vertex.swift */; };
+		8CA4A0022162A8B300DD2DFA /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CA4A0012162A8B300DD2DFA /* Node.swift */; };
+		8CA4A0042162ACFF00DD2DFA /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CA4A0032162ACFF00DD2DFA /* Triangle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +28,12 @@
 		8CA49FF121628FC200DD2DFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8CA49FF321628FC200DD2DFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8CA49FF92162969C00DD2DFA /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		8CA49FFB2162A46300DD2DFA /* HelloMetal-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HelloMetal-Bridging-Header.h"; sourceTree = "<group>"; };
+		8CA49FFC2162A46300DD2DFA /* Matrix4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix4.h; sourceTree = "<group>"; };
+		8CA49FFD2162A46400DD2DFA /* Matrix4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Matrix4.m; sourceTree = "<group>"; };
+		8CA49FFF2162A84A00DD2DFA /* Vertex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vertex.swift; sourceTree = "<group>"; };
+		8CA4A0012162A8B300DD2DFA /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
+		8CA4A0032162ACFF00DD2DFA /* Triangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,13 +66,19 @@
 		8CA49FE621628FBF00DD2DFA /* HelloMetal */ = {
 			isa = PBXGroup;
 			children = (
+				8CA49FFC2162A46300DD2DFA /* Matrix4.h */,
+				8CA49FFD2162A46400DD2DFA /* Matrix4.m */,
 				8CA49FE721628FBF00DD2DFA /* AppDelegate.swift */,
 				8CA49FE921628FBF00DD2DFA /* ViewController.swift */,
+				8CA49FFF2162A84A00DD2DFA /* Vertex.swift */,
+				8CA4A0012162A8B300DD2DFA /* Node.swift */,
+				8CA4A0032162ACFF00DD2DFA /* Triangle.swift */,
 				8CA49FF92162969C00DD2DFA /* Shaders.metal */,
 				8CA49FEB21628FBF00DD2DFA /* Main.storyboard */,
 				8CA49FEE21628FC200DD2DFA /* Assets.xcassets */,
 				8CA49FF021628FC200DD2DFA /* LaunchScreen.storyboard */,
 				8CA49FF321628FC200DD2DFA /* Info.plist */,
+				8CA49FFB2162A46300DD2DFA /* HelloMetal-Bridging-Header.h */,
 			);
 			path = HelloMetal;
 			sourceTree = "<group>";
@@ -99,6 +115,7 @@
 				TargetAttributes = {
 					8CA49FE321628FBF00DD2DFA = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1010;
 					};
 				};
 			};
@@ -139,7 +156,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				8CA49FFA2162969C00DD2DFA /* Shaders.metal in Sources */,
+				8CA49FFE2162A46400DD2DFA /* Matrix4.m in Sources */,
 				8CA49FEA21628FBF00DD2DFA /* ViewController.swift in Sources */,
+				8CA4A0022162A8B300DD2DFA /* Node.swift in Sources */,
+				8CA4A0002162A84A00DD2DFA /* Vertex.swift in Sources */,
+				8CA4A0042162ACFF00DD2DFA /* Triangle.swift in Sources */,
 				8CA49FE821628FBF00DD2DFA /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -286,6 +307,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7Q58872TYB;
 				INFOPLIST_FILE = HelloMetal/Info.plist;
@@ -295,6 +317,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.charlesmartinreed.HelloMetal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "HelloMetal/HelloMetal-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -304,6 +328,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7Q58872TYB;
 				INFOPLIST_FILE = HelloMetal/Info.plist;
@@ -313,6 +338,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.charlesmartinreed.HelloMetal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "HelloMetal/HelloMetal-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
